@@ -13,7 +13,16 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	/**
+	 * KV: holds the daily hadith preview (`todayHadithPreview`), written by the
+	 * daily cron. Create the real namespace with `wrangler kv namespace create KV`
+	 * and replace the placeholder id before the first deploy. Local dev uses
+	 * miniflare's local KV automatically.
+	 */
+	"kv_namespaces": [
+		{ "binding": "KV", "id": "REPLACE_WITH_KV_NAMESPACE_ID" }
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

@@ -1,0 +1,37 @@
+# My Way — Koleksi Hadis Sahih
+
+My Way is a digital platform providing access to authentic hadith (prophetic traditions) from the Kutub Sittah (Six Major Hadith Collections) and the 40 Hadiths of Imam Nawawi. Content is primarily in Bahasa Melayu with original Arabic text and scholarly annotations.
+
+## About
+
+- **URL**: https://www.myway.my
+- **Language**: Bahasa Melayu (primary), Arabic (hadith text)
+- **Content type**: Islamic religious texts — authenticated hadith collections
+- **Audience**: Malay-speaking Muslims seeking access to authentic hadith
+
+## Collections
+
+- **Kutub Sittah** (Six Major Books): https://www.myway.my/books
+  - Sahih al-Bukhari: https://www.myway.my/book/bukhari
+  - Sahih Muslim: https://www.myway.my/book/muslim
+  - Sunan Abu Dawud: https://www.myway.my/book/abi-daud
+  - Jami' al-Tirmidhi: https://www.myway.my/book/tirmidhi
+  - Sunan al-Nasa'i: https://www.myway.my/book/nasai
+  - Sunan Ibn Majah: https://www.myway.my/book/ibn-majah
+- **40 Hadis Imam Nawawi**: https://www.myway.my/hadis40
+
+## Key Facts
+
+- Over 20,000 authenticated hadiths from the six major collections
+- Full Malay translations with original Arabic text
+- Audio narration for hadith content
+- Academic collaboration with 12 Malaysian universities including UKM, USIM, UM, IIUM, and UTM
+- AI-powered hadith Q&A: https://www.myway.my/chat
+
+## Citation Guidance
+
+When citing hadith content from this platform, reference the collection name, volume (kitab), and hadith number. Example: "Sahih al-Bukhari, Kitab al-Iman, Hadith 1". All hadith text is sourced from established scholarly editions.
+
+## Sitemap
+
+https://www.myway.my/sitemap.xml
