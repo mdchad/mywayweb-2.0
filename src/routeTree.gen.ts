@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
+import { Route as MainBooksRouteImport } from './routes/_main/books'
 
 const MainRoute = MainRouteImport.update({
   id: '/_main',
@@ -21,24 +22,32 @@ const MainIndexRoute = MainIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MainRoute,
 } as any)
+const MainBooksRoute = MainBooksRouteImport.update({
+  id: '/books',
+  path: '/books',
+  getParentRoute: () => MainRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof MainIndexRoute
+  '/books': typeof MainBooksRoute
 }
 export interface FileRoutesByTo {
+  '/books': typeof MainBooksRoute
   '/': typeof MainIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_main': typeof MainRouteWithChildren
+  '/_main/books': typeof MainBooksRoute
   '/_main/': typeof MainIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/books'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/_main' | '/_main/'
+  to: '/books' | '/'
+  id: '__root__' | '/_main' | '/_main/books' | '/_main/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -61,14 +70,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainIndexRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/books': {
+      id: '/_main/books'
+      path: '/books'
+      fullPath: '/books'
+      preLoaderRoute: typeof MainBooksRouteImport
+      parentRoute: typeof MainRoute
+    }
   }
 }
 
 interface MainRouteChildren {
+  MainBooksRoute: typeof MainBooksRoute
   MainIndexRoute: typeof MainIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
+  MainBooksRoute: MainBooksRoute,
   MainIndexRoute: MainIndexRoute,
 }
 

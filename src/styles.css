@@ -123,9 +123,11 @@
   --font-hafs:
     UthmanicHafs, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-arabic-symbol: 'KFGQPC Arabic Symbols';
-  --font-surah: SurahNames;
-  --font-book: Fantezy;
+  /* Latin fallbacks matter: these Arabic faces have little/no Latin coverage
+     and next/font used to inject an Arial-adjusted fallback automatically. */
+  --font-arabic-symbol: 'KFGQPC Arabic Symbols', Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-surah: SurahNames, Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-book: Fantezy, Arial, ui-sans-serif, system-ui, sans-serif;
   /* TODO(port): Geist is not self-hosted yet; falls back to Inter until the
      chat surfaces are ported. */
   --font-geist-sans: InterVariable, ui-sans-serif, system-ui, sans-serif;
@@ -262,7 +264,12 @@
     --chart-4: 0 0 64;
     --chart-5: 27 87% 67%;
     font-family: InterVariable, sans-serif;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "salt";
+    /* NOTE(port): the old app also declared
+       font-feature-settings: "cv02","cv03","cv04","cv11","salt";
+       but its Google-built Inter (next/font) had those features stripped, so
+       they never rendered. Our self-hosted InterVariable DOES honor them
+       (single-storey "a" via cv11+salt), which changed letterforms site-wide.
+       Omit them to match production rendering. */
   }
 
   .dark {
