@@ -72,9 +72,8 @@ export const KUTUB_SITTAH: KutubBook[] = [
   },
 ];
 
-// NOTE(port): links to routes that haven't been ported yet (/book/*, /books,
-// /hadis40, /chat, /login) are plain <a> tags; swap to typed <Link> as each
-// route lands.
+// NOTE(port): links to routes that haven't been ported yet (/book/*, /chat,
+// /login) are plain <a> tags; swap to typed <Link> as each route lands.
 const KutubSittahDropdown = () => (
   <NavigationMenu>
     <NavigationMenuList>
@@ -105,13 +104,13 @@ const KutubSittahDropdown = () => (
             ))}
             <li className="col-span-2">
               <NavigationMenuLink asChild>
-                <a
-                  href="/books"
+                <Link
+                  to="/books"
                   className="flex items-center justify-between rounded-sm border border-[#d6d6d6] bg-gray-50 px-3 py-2 text-xs font-mono uppercase text-[#f80] transition-colors hover:bg-gray-100"
                 >
                   <span>Lihat Semua Koleksi</span>
                   <span className="text-sm leading-none">↗</span>
-                </a>
+                </Link>
               </NavigationMenuLink>
             </li>
           </ul>
@@ -131,12 +130,12 @@ const NavLinks = () => (
     >
       PENGENALAN
     </a>
-    <a
-      href="/hadis40"
+    <Link
+      to="/hadis40"
       className="font-sans text-xs whitespace-nowrap hover:text-foreground hover:underline"
     >
       HADIS 40
-    </a>
+    </Link>
     <KutubSittahDropdown />
     <a
       href="/chat"
@@ -157,12 +156,12 @@ const MobileNavLinks = () => (
     >
       PENGENALAN
     </a>
-    <a
-      href="/hadis40"
+    <Link
+      to="/hadis40"
       className="font-sans text-xs whitespace-nowrap hover:text-foreground hover:underline"
     >
       HADIS 40
-    </a>
+    </Link>
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="kutub-sittah" className="border-b-0">
         <AccordionTrigger className="font-sans text-xs uppercase py-2 hover:no-underline">
@@ -186,12 +185,12 @@ const MobileNavLinks = () => (
               </li>
             ))}
             <li>
-              <a
-                href="/books"
+              <Link
+                to="/books"
                 className="mt-1 inline-flex items-center gap-1 py-1.5 font-mono text-xs uppercase text-foreground hover:underline"
               >
                 Lihat Semua <span className="text-sm leading-none">↗</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </AccordionContent>

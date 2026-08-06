@@ -1,25 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { createServerFn } from '@tanstack/react-start'
 import { cn } from '@/lib/utils'
 import {
   generateItemListSchema,
   generateHadithCollectionSchema,
   generateBreadcrumbSchema,
 } from '@/lib/structured-data'
-import type { BookWithStats } from '@/lib/queries/books'
+import { fetchBooksList } from '@/server/books'
 
 const PAGE_TITLE = 'Kutub Sittah | My Way'
 const PAGE_DESCRIPTION =
   "Pelajari enam koleksi hadis utama (Kutub Sittah): Sahih al-Bukhari, Sahih Muslim, Sunan Abu Dawud, Jami' Al-Tirmidhi, Sunan Al-Nasa'i, dan Sunan Ibn Majah. Hadis sahih dan autentik dalam bahasa Melayu, Arab, dan Inggris."
-
-// Dynamic import keeps kysely/@libsql out of the client bundle; the server-fn
-// compiler strips the handler body from the browser build.
-const getBooks = createServerFn({ method: 'GET' }).handler(
-  async (): Promise<BookWithStats[]> => {
-    const { getBooksWithStats } = await import('@/lib/queries/books')
-    return getBooksWithStats()
-  },
-)
 
 const bookArabicTitle: Record<string, string> = {
   bukhari: 'صحيح البخاري',
@@ -31,7 +21,11 @@ const bookArabicTitle: Record<string, string> = {
 }
 
 export const Route = createFileRoute('/_main/books')({
-  loader: () => getBooks(),
+  loader: () => fetchBooksList(),
+  // Content changes only on admin edits; don't refire the loader RPC on
+  // every hover/navigation.
+  staleTime: 60 * 60 * 1000,
+  preloadStaleTime: 60 * 60 * 1000,
   head: () => ({
     meta: [
       { title: PAGE_TITLE },

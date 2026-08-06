@@ -97,3 +97,45 @@ export async function getBooksWithStats(): Promise<BookWithStats[]> {
     total_hadiths: r.total_hadiths != null ? Number(r.total_hadiths) : null,
   }))
 }
+
+// Exactly the fields the /books page renders. The query layer owns the
+// wire shape: selectAll would ship mongo_id/timestamps to every visitor via
+// the route loader payload.
+export type BookListItem = {
+  id: string
+  slug: string
+  title_ms: string
+  last_volume_number: number | null
+  total_hadiths: number | null
+}
+
+export async function getBooksForList(): Promise<BookListItem[]> {
+  const rows = await db
+    .selectFrom('books as b')
+    .select(['b.id', 'b.slug', 'b.title_ms'])
+    .select((eb) => [
+      eb
+        .selectFrom('volumes')
+        .select(({ fn }) => fn.max('number').as('last_volume_number'))
+        .whereRef('volumes.book_id', '=', 'b.id')
+        .as('last_volume_number'),
+      eb
+        .selectFrom('volumes')
+        .select('hadith_last')
+        .whereRef('volumes.book_id', '=', 'b.id')
+        .orderBy('number', 'desc')
+        .limit(1)
+        .as('total_hadiths'),
+    ])
+    .orderBy('b.mongo_id', 'asc')
+    .execute()
+
+  return rows.map((r) => ({
+    id: r.id,
+    slug: r.slug,
+    title_ms: r.title_ms ?? '',
+    last_volume_number:
+      r.last_volume_number != null ? Number(r.last_volume_number) : null,
+    total_hadiths: r.total_hadiths != null ? Number(r.total_hadiths) : null,
+  }))
+}

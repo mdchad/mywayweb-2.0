@@ -26,7 +26,9 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
-      { rel: 'canonical', href: 'https://www.myway.my' },
+      // No default canonical here: unlike Next metadata (which replaces the
+      // root value per page), TanStack head links accumulate, so a root
+      // canonical would duplicate every page's own. Each route sets its own.
       { rel: 'icon', href: '/icon.ico', sizes: 'any' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },

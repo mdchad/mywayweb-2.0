@@ -1,12 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { createServerFn } from '@tanstack/react-start'
 import {
   generateCollectionSchema,
   generateBreadcrumbSchema,
   generateItemListSchema,
 } from '@/lib/structured-data'
 import Hadis40Item from '@/components/Hadis40Item'
-import type { Hadis40, Hadis40Source } from '@/lib/hadith40'
+import { fetchHadis40List } from '@/server/hadis40'
 
 const PAGE_URL = 'https://www.myway.my/hadis40'
 const PAGE_TITLE =
@@ -14,32 +13,12 @@ const PAGE_TITLE =
 const PAGE_DESCRIPTION =
   "Koleksi lengkap 42 hadis pilihan Imam Nawawi (Hadis 40 / Arba'in Nawawiyyah) dengan teks Arab, terjemahan Bahasa Melayu, audio, dan pengajaran. Rujukan hadis sahih Nabi Muhammad SAW dalam satu tempat.";
 
-type Hadis40PageData = {
-  // footnotes (typed unknown[]) are dropped: the list page doesn't render
-  // them and the server-fn serializer rejects unknown-typed values.
-  hadiths: Omit<Hadis40, 'footnotes'>[]
-  // Map from the query is flattened to a record for loader serialization.
-  sourcesByNumber: Record<number, Hadis40Source[]>
-}
-
-const getHadis40Data = createServerFn({ method: 'GET' }).handler(
-  async (): Promise<Hadis40PageData> => {
-    const { getAllHadis40, getAllHadis40Sources } = await import(
-      '@/lib/hadith40'
-    )
-    const [hadiths, sourcesMap] = await Promise.all([
-      getAllHadis40(),
-      getAllHadis40Sources(),
-    ])
-    return {
-      hadiths: hadiths.map(({ footnotes: _footnotes, ...rest }) => rest),
-      sourcesByNumber: Object.fromEntries(sourcesMap),
-    }
-  },
-)
-
 export const Route = createFileRoute('/_main/hadis40/')({
-  loader: () => getHadis40Data(),
+  loader: () => fetchHadis40List(),
+  // Content changes only on admin edits; don't refire the loader RPC on
+  // every hover/navigation.
+  staleTime: 60 * 60 * 1000,
+  preloadStaleTime: 60 * 60 * 1000,
   head: () => ({
     meta: [
       { title: PAGE_TITLE },

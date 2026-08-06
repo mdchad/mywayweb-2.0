@@ -181,3 +181,39 @@ export async function getHadis40NumbersForHadith(
     return []
   }
 }
+
+// --- List-page shape ------------------------------------------------------
+
+// Trimmed to what the hadis40 pages actually render (ms/ar only): no en
+// translations, no footnotes. This is the shape that goes over the wire in
+// the route loader, so trimming here cuts real page weight.
+export interface Hadis40ListItem {
+  number: number
+  id: string
+  hadith_title: { ms: string }
+  narrators: { ms: string }[]
+  narrated_by: { ms: string; ar: string }[]
+  content: { ms: string; ar: string; audio?: { ms?: string; ar?: string } }[]
+  lesson: { items: { ms: string }[]; audio?: { ms?: string } }
+}
+
+const toListItem = (h: Hadis40): Hadis40ListItem => ({
+  number: h.number,
+  id: h.id,
+  hadith_title: { ms: h.hadith_title.ms },
+  narrators: h.narrators.map((n) => ({ ms: n.ms })),
+  narrated_by: h.narrated_by.map((n) => ({ ms: n.ms, ar: n.ar })),
+  content: h.content.map((c) => ({
+    ms: c.ms,
+    ar: c.ar,
+    ...(c.audio ? { audio: c.audio } : {}),
+  })),
+  lesson: {
+    items: h.lesson.items.map((l) => ({ ms: l.ms })),
+    ...(h.lesson.audio ? { audio: h.lesson.audio } : {}),
+  },
+})
+
+export async function getAllHadis40ForList(): Promise<Hadis40ListItem[]> {
+  return (await getAllHadis40()).map(toListItem)
+}

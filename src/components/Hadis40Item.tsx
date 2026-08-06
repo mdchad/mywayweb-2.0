@@ -1,8 +1,8 @@
-import type { Hadis40, Hadis40Source } from "@/lib/hadith40";
+import type { Hadis40ListItem, Hadis40Source } from "@/lib/hadith40";
 
 
 interface Hadis40ItemProps {
-  item: Omit<Hadis40, "footnotes">;
+  item: Hadis40ListItem;
   showSectionHeader?: boolean;
   mode?: 'list' | 'individual'
   sources?: Hadis40Source[];

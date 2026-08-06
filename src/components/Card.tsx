@@ -1,3 +1,4 @@
+import { Link, type LinkProps } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import posthog from "posthog-js";
@@ -9,9 +10,14 @@ interface CardProps {
   gradient?: boolean;
 }
 
-// NOTE(port): links are plain <a> until the target routes (/hadis40, /books,
-// /chat) are ported; switch to typed <Link> as each route lands.
-export function BookCard({ path, title, description }: CardProps) {
+// Typed router link with viewport preloading: code + loader data are fetched
+// when the card scrolls into view, so the click renders instantly (parity
+// with Next's <Link> prefetch on prerendered pages).
+interface BookCardProps extends Omit<CardProps, "path"> {
+  path: LinkProps["to"];
+}
+
+export function BookCard({ path, title, description }: BookCardProps) {
   const handleClick = () => {
     // PostHog: Capture book/section selection event
     posthog.capture('book_selected', {
@@ -23,7 +29,7 @@ export function BookCard({ path, title, description }: CardProps) {
   return (
     <div className="relative">
       <div className="absolute left-0 top-0 h-full w-full bg-[size:10px_10px] bg-[image:repeating-linear-gradient(315deg,white,white_6px,rgba(59,130,246,0.6)_5px,rgba(59,130,246,0.6)_7px)] border border-[#d6d6d6]"></div>
-      <a href={path} onClick={handleClick}>
+      <Link to={path} preload="viewport" onClick={handleClick}>
         <div
           className={cn(
             "group relative overflow-hidden",
@@ -36,7 +42,7 @@ export function BookCard({ path, title, description }: CardProps) {
             <p className="text-sm font-sans font-light">{description}</p>
             <Button className="mt-10 rounded-none font-mono text-xs mx-auto cursor-pointer">LIHAT</Button>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }

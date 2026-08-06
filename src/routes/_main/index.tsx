@@ -4,7 +4,7 @@ import { BookCard, AICard } from '@/components/Card'
 import { GridPattern } from '@/components/grid-pattern'
 import { cn } from '@/lib/utils'
 import { TrackedIntroButton } from '@/components/TrackedIntroButton'
-import { getTodayPreview } from '@/lib/today'
+import { getTodayPreview } from '@/server/today'
 
 const HOME_TITLE =
   'Koleksi Hadis Sahih: Hadis 40 Imam Nawawi dan Kutub Sittah | My Way'
@@ -17,6 +17,8 @@ const HOME_DESCRIPTION =
 // in the caching phase of the migration.
 export const Route = createFileRoute('/_main/')({
   loader: () => getTodayPreview(),
+  staleTime: 60 * 60 * 1000,
+  preloadStaleTime: 60 * 60 * 1000,
   head: () => ({
     meta: [
       { title: HOME_TITLE },
