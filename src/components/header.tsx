@@ -169,8 +169,9 @@ const MobileNavLinks = () => (
           <ul className="flex flex-col gap-1 pl-2">
             {KUTUB_SITTAH.map((book) => (
               <li key={book.slug}>
-                <a
-                  href={`/book/${book.slug}`}
+                <Link
+                  to="/book/$slug"
+                  params={{ slug: book.slug }}
                   className="flex items-center justify-between gap-3 rounded-sm py-1.5 text-sm hover:underline"
                 >
                   <span className="font-medium text-royal-blue">
@@ -179,7 +180,7 @@ const MobileNavLinks = () => (
                   <span className="font-book text-sm text-royal-blue/60">
                     {book.arabic}
                   </span>
-                </a>
+                </Link>
               </li>
             ))}
             <li>

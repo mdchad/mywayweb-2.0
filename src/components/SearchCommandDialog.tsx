@@ -50,8 +50,7 @@ export function SearchCommandDialog({ open, onOpenChange }: Props) {
 
   const goToBook = (slug: string) => {
     onOpenChange(false);
-    // /book/$slug isn't ported yet; full-page navigation until it lands.
-    window.location.assign(`/book/${slug}`);
+    navigate({ to: "/book/$slug", params: { slug } });
   };
 
   const hasQuery = query.trim().length > 0;

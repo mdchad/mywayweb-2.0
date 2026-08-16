@@ -211,11 +211,11 @@ function SearchPage() {
             return (
               <div key={doc.id + i} className="grid">
                 <div className="flex flex-wrap items-center gap-1 pt-4 pb-2">
-                  <a href={`/book/${bookSlug}`}>
+                  <Link to="/book/$slug" params={{ slug: bookSlug }}>
                     <p className="text-royal-blue hover:underline font-sans text-sm font-semibold">
                       {doc.book.title_ms}
                     </p>
-                  </a>
+                  </Link>
                   <span className="text-xs">
                     <ChevronRightSquare color="black" size={18} />
                   </span>

@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
 import {
   generateItemListSchema,
@@ -126,7 +126,7 @@ function BooksPage() {
             return (
               <div className="relative" key={book.id}>
                 <div className="absolute left-0 top-0 h-full w-full bg-[size:10px_10px] bg-[image:repeating-linear-gradient(315deg,white,white_6px,rgba(59,130,246,0.6)_5px,rgba(59,130,246,0.6)_7px)] border border-[#d6d6d6]"></div>
-                <a href={`/book/${book.slug}`}>
+                <Link to="/book/$slug" params={{ slug: book.slug }} preload="intent">
                   <div
                     className={cn(
                       'group relative col-span-3 flex flex-col justify-between overflow-hidden',
@@ -156,7 +156,7 @@ function BooksPage() {
                       </p>
                     </div>
                   </div>
-                </a>
+                </Link>
               </div>
             )
           })}
