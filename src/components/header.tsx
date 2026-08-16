@@ -282,11 +282,11 @@ const Navbar = ({ children }: { children?: ReactNode }) => {
                 </Button>
               ) : (
                 <Button
-                  asChild
+                  render={<a href="/login" />}
                   size="sm"
                   className="font-mono hover:bg-white cursor-pointer bg-white text-black rounded-none shadow-none border border-[#d6d6d6] hover:border-[#b8b8b8] h-full"
                 >
-                  <a href="/login">MASUK</a>
+                  MASUK
                 </Button>
               )}
             </div>

@@ -15,6 +15,7 @@
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
+		"@base-ui/react": "^1.7.0",
 		"@libsql/client": "^0.17.4",
 		"@posthog/react": "^1.7.0",
 		"@radix-ui/react-accordion": "^1.2.20",
