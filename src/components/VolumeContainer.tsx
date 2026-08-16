@@ -28,6 +28,9 @@ function VolumeContainer({ volumes, slug }: VolumeContainerProps) {
         q: value ? (/^\d+$/.test(value) ? Number(value) : value) : undefined,
       }),
       replace: true,
+      // nuqs never scrolled on URL updates; router navigations reset scroll
+      // to top by default, which yanks the page while typing in the filter.
+      resetScroll: false,
     });
 
   const parsedNumber = parseInt(q, 10);
