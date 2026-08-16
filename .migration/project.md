@@ -25,7 +25,7 @@ Swept `src/` (outside `components/ui`) for `asChild`, `data-[state=...]`, `delay
 
 ## Flags
 
-- **Legacy style caveat (not fixed, by design)**: `components.json` still reads `"style": "new-york"`, `"base": "radix"`. There is no `base-new-york` registry style, so the config was NOT flipped. Future `shadcn add <component>` will deliver **radix** variants; either add new components by hand against Base UI, or switch the project to a `base-<style>` (which would restyle the app).
+- **Legacy style caveat — RESOLVED 2026-08-16**: `components.json` was flipped from `"style": "new-york"` to `"style": "base-nova"` at the user's request (commit `d339527`). The CLI now resolves `base: base`, and future `shadcn add <component>` delivers Base UI variants (verified: `base-nova/tooltip` imports `@base-ui/react/tooltip`). Existing wrappers are untouched by the flip; newly added components arrive in the base-nova look and should have their classes adjusted to the site's design. Do not run `add --overwrite` on existing components — it would restyle them.
 - Behavior deltas are listed per component; the notable ones are the navigation-menu popup now anchoring to the trigger (portal-rendered, 50ms hover delay) and accordion losing arrow-key roving focus.
 
 ## Status
