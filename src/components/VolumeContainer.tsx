@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { useFuzzySearchList } from "@nozbe/microfuzz/react";
 import { Search } from "lucide-react";
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { Link, getRouteApi, useNavigate } from "@tanstack/react-router";
 import posthog from "posthog-js";
 import type { Volume } from "@/lib/types/hadith";
 
@@ -72,16 +72,18 @@ function VolumeContainer({ volumes, slug }: VolumeContainerProps) {
             return (
               <div className="relative group" key={vol.id}>
                 <div className="absolute left-0 top-0 h-full w-full bg-[size:10px_10px] bg-[image:repeating-linear-gradient(315deg,white,white_6px,rgba(59,130,246,0.6)_5px,rgba(59,130,246,0.6)_7px)] border border-b-0 group-last:border-b border-[#d6d6d6]"></div>
-                <a
+                <Link
                   key={vol.id}
-                  href={`/book/${slug}/${vol.slug}${
+                  to="/book/$slug/$volume"
+                  params={{ slug, volume: vol.slug }}
+                  hash={
                     queryNumber
                       ? (() => {
                           const variant = vol.variant_anchors?.[queryNumber];
-                          return `#hadith-${queryNumber}${variant ? `-${variant}` : ""}`;
+                          return `hadith-${queryNumber}${variant ? `-${variant}` : ""}`;
                         })()
-                      : ""
-                  }`}
+                      : undefined
+                  }
                   onClick={() => {
                     posthog.capture('volume_viewed', {
                       volume_id: vol.id,
@@ -136,7 +138,7 @@ function VolumeContainer({ volumes, slug }: VolumeContainerProps) {
                     </div>
                     <div className="absolute flex gap-2 bottom-0 right-0 bg-royal-blue px-2 py-1 text-white font-mono text-xs">↗</div>
                   </div>
-                </a>
+                </Link>
               </div>
             );
           })

@@ -219,11 +219,14 @@ function SearchPage() {
                   <span className="text-xs">
                     <ChevronRightSquare color="black" size={18} />
                   </span>
-                  <a href={`/book/${bookSlug}/${volumeSlug}`}>
+                  <Link
+                    to="/book/$slug/$volume"
+                    params={{ slug: bookSlug, volume: volumeSlug }}
+                  >
                     <p className="text-royal-blue hover:underline font-sans text-sm font-semibold capitalize">
                       {doc.volume.title_ms.toLowerCase()}
                     </p>
-                  </a>
+                  </Link>
                   <span className="text-xs">
                     <ChevronRightSquare color="black" size={18} />
                   </span>

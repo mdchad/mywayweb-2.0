@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -34,14 +35,50 @@ const buttonVariants = cva(
 )
 
 export type ButtonProps = ButtonPrimitive.Props &
-  VariantProps<typeof buttonVariants>
+  VariantProps<typeof buttonVariants> & {
+    // Radix-era compat: render the single child element instead of a <button>.
+    // Maps onto Base UI's `render` prop.
+    asChild?: boolean
+  }
 
-function Button({ className, variant, size, ...props }: ButtonProps) {
+function Button({
+  className,
+  variant,
+  size,
+  asChild,
+  render,
+  children,
+  ...props
+}: ButtonProps) {
+  // Native Base UI usage passes `render` + children directly. The asChild
+  // compat path lifts the single child element into `render` and its own
+  // children into the component children (Base UI populates the rendered
+  // element's children from component children).
+  let finalRender = render
+  let finalChildren = children
+  if (!render && asChild && React.isValidElement(children)) {
+    const el = children as React.ReactElement<{ children?: React.ReactNode }>
+    finalRender = el
+    finalChildren = el.props.children
+  }
+  if (finalRender) {
+    return (
+      <ButtonPrimitive
+        className={cn(buttonVariants({ variant, size, className }))}
+        render={finalRender}
+        {...props}
+      >
+        {finalChildren}
+      </ButtonPrimitive>
+    )
+  }
   return (
     <ButtonPrimitive
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-    />
+    >
+      {children}
+    </ButtonPrimitive>
   )
 }
 

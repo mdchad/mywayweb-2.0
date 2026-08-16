@@ -202,3 +202,29 @@ registry). Radix was removed. Quirks:
   dual shapes) are NOT ported yet. Mobile keeps hitting the old app until
   the API-port phase, which should be gated on converting the old repo's 120
   contract tests to black-box HTTP form first.
+
+---
+
+## Addendum: hadith volume page port (2026-08-16)
+
+- **`asChild` compat shims**: `ui/button.tsx`, `ui/tooltip.tsx` (Trigger) and
+  `ui/sheet.tsx` (Trigger) accept Radix-era `asChild` by lifting the single
+  child element into Base UI's `render` prop. Two subtleties: Base UI
+  populates the rendered element's children from the *component's* children
+  (so the shim forwards the child element's own children), and native
+  `render={<a />}` + children usage must pass through untouched. Ported code
+  keeps its `asChild` call sites unchanged.
+- **Base UI tooltip provider prop is `delay`, not `delayDuration`.**
+- **Duplicate-React crash after mid-session installs**: adding packages while
+  `vite dev` runs can leave stale dep-optimization state (symptom:
+  `Cannot read properties of null (reading 'useContext'/'useMemo')` in SSR or
+  hooks). Fix: kill dev server, `rm -rf node_modules/.vite`, restart.
+- **`inputValidator` is deprecated in the current Start version** (warns at
+  dev time); switch server fns to `.validator()` in a cleanup pass.
+- The sidenote-alignment engine, audio player, reading settings and Lexical
+  renderer ported verbatim (all client-side; no framework coupling). Layout
+  parity was verified by anchoring the same hadith on prod and port: both
+  land at the identical scrollY.
+- **AIChat is a stub** (`src/components/AIChat.tsx`): the per-hadith "Tanya
+  AI" drawer shows a placeholder until the /chat port lands (needs
+  ai-elements suite + /api/chat streaming backend).
