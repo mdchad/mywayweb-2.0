@@ -78,39 +78,37 @@ const KutubSittahDropdown = () => (
   <NavigationMenu>
     <NavigationMenuList>
       <NavigationMenuItem>
-        <NavigationMenuTrigger className="cursor-pointer font-sans font-[400] text-xs hover:text-foreground h-auto px-0 py-0 bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent data-[state=open]:focus:bg-transparent data-[state=open]:text-foreground">
+        <NavigationMenuTrigger className="cursor-pointer font-sans font-[400] text-xs hover:text-foreground h-auto px-0 py-0 bg-transparent hover:bg-transparent focus:bg-transparent data-popup-open:bg-transparent data-popup-open:hover:bg-transparent data-popup-open:focus:bg-transparent data-popup-open:text-foreground">
           KUTUB SITTAH
         </NavigationMenuTrigger>
         <NavigationMenuContent>
           <ul className="grid w-[560px] grid-cols-2 gap-2 p-3">
             {KUTUB_SITTAH.map((book) => (
               <li key={book.slug}>
-                <NavigationMenuLink asChild>
-                  <a
-                    href={`/book/${book.slug}`}
-                    className="block select-none rounded-sm border border-transparent p-3 leading-none no-underline outline-none transition-colors hover:border-[#d6d6d6] hover:bg-accent focus:bg-accent"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="text-sm font-semibold text-royal-blue">
-                        {book.title}
-                      </div>
+                <NavigationMenuLink
+                  closeOnClick
+                  render={<a href={`/book/${book.slug}`} />}
+                  className="block select-none rounded-sm border border-transparent p-3 leading-none no-underline outline-none transition-colors hover:border-[#d6d6d6] hover:bg-accent focus:bg-accent"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="text-sm font-semibold text-royal-blue">
+                      {book.title}
                     </div>
-                    <p className="mt-1.5 line-clamp-2 text-xs text-muted-foreground">
-                      {book.description}
-                    </p>
-                  </a>
+                  </div>
+                  <p className="mt-1.5 line-clamp-2 text-xs text-muted-foreground">
+                    {book.description}
+                  </p>
                 </NavigationMenuLink>
               </li>
             ))}
             <li className="col-span-2">
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/books"
-                  className="flex items-center justify-between rounded-sm border border-[#d6d6d6] bg-gray-50 px-3 py-2 text-xs font-mono uppercase text-[#f80] transition-colors hover:bg-gray-100"
-                >
-                  <span>Lihat Semua Koleksi</span>
-                  <span className="text-sm leading-none">↗</span>
-                </Link>
+              <NavigationMenuLink
+                closeOnClick
+                render={<Link to="/books" />}
+                className="flex items-center justify-between rounded-sm border border-[#d6d6d6] bg-gray-50 px-3 py-2 text-xs font-mono uppercase text-[#f80] transition-colors hover:bg-gray-100"
+              >
+                <span>Lihat Semua Koleksi</span>
+                <span className="text-sm leading-none">↗</span>
               </NavigationMenuLink>
             </li>
           </ul>
@@ -162,7 +160,7 @@ const MobileNavLinks = () => (
     >
       HADIS 40
     </Link>
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion className="w-full">
       <AccordionItem value="kutub-sittah" className="border-b-0">
         <AccordionTrigger className="font-sans text-xs uppercase py-2 hover:no-underline">
           KUTUB SITTAH
@@ -282,11 +280,11 @@ const Navbar = ({ children }: { children?: ReactNode }) => {
                 </Button>
               ) : (
                 <Button
-                  asChild
+                  render={<a href="/login" />}
                   size="sm"
                   className="font-mono hover:bg-white cursor-pointer bg-white text-black rounded-none shadow-none border border-[#d6d6d6] hover:border-[#b8b8b8] h-full"
                 >
-                  <a href="/login">MASUK</a>
+                  MASUK
                 </Button>
               )}
             </div>
