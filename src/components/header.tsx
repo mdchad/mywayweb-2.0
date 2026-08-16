@@ -162,7 +162,7 @@ const MobileNavLinks = () => (
     >
       HADIS 40
     </Link>
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion className="w-full">
       <AccordionItem value="kutub-sittah" className="border-b-0">
         <AccordionTrigger className="font-sans text-xs uppercase py-2 hover:no-underline">
           KUTUB SITTAH
