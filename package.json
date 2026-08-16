@@ -15,6 +15,7 @@
 		"cf-typegen": "wrangler types"
 	},
 	"dependencies": {
+		"@ai-sdk/openai": "^4.0.42",
 		"@base-ui/react": "^1.7.0",
 		"@libsql/client": "^0.17.4",
 		"@posthog/react": "^1.7.0",
@@ -24,8 +25,10 @@
 		"@tanstack/react-router": "latest",
 		"@tanstack/react-router-devtools": "latest",
 		"@tanstack/react-start": "latest",
+		"ai": "^7.0.66",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
+		"cmdk": "^1.1.1",
 		"dotenv-cli": "^11.0.0",
 		"kysely": "^0.29.4",
 		"kysely-turso": "^0.1.1",
@@ -38,7 +41,8 @@
 		"tailwindcss-animate": "^1.0.7",
 		"tailwindcss-pattern": "^0.1.0",
 		"tw-animate-css": "^1.3.6",
-		"vaul": "^1.1.2"
+		"vaul": "^1.1.2",
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
 		"@cloudflare/vite-plugin": "^1.26.0",

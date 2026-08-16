@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
 import { Route as MainBooksRouteImport } from './routes/_main/books'
+import { Route as MainSearchRouteImport } from './routes/_main/search'
 import { Route as MainHadis40IndexRouteImport } from './routes/_main/hadis40/index'
 
 const MainRoute = MainRouteImport.update({
@@ -28,6 +29,11 @@ const MainBooksRoute = MainBooksRouteImport.update({
   path: '/books',
   getParentRoute: () => MainRoute,
 } as any)
+const MainSearchRoute = MainSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => MainRoute,
+} as any)
 const MainHadis40IndexRoute = MainHadis40IndexRouteImport.update({
   id: '/hadis40/',
   path: '/hadis40/',
@@ -37,10 +43,12 @@ const MainHadis40IndexRoute = MainHadis40IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof MainIndexRoute
   '/books': typeof MainBooksRoute
+  '/search': typeof MainSearchRoute
   '/hadis40/': typeof MainHadis40IndexRoute
 }
 export interface FileRoutesByTo {
   '/books': typeof MainBooksRoute
+  '/search': typeof MainSearchRoute
   '/': typeof MainIndexRoute
   '/hadis40': typeof MainHadis40IndexRoute
 }
@@ -48,15 +56,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_main': typeof MainRouteWithChildren
   '/_main/books': typeof MainBooksRoute
+  '/_main/search': typeof MainSearchRoute
   '/_main/': typeof MainIndexRoute
   '/_main/hadis40/': typeof MainHadis40IndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/books' | '/hadis40/'
+  fullPaths: '/' | '/books' | '/search' | '/hadis40/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/books' | '/' | '/hadis40'
-  id: '__root__' | '/_main' | '/_main/books' | '/_main/' | '/_main/hadis40/'
+  to: '/books' | '/search' | '/' | '/hadis40'
+  id:
+    | '__root__'
+    | '/_main'
+    | '/_main/books'
+    | '/_main/search'
+    | '/_main/'
+    | '/_main/hadis40/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -86,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainBooksRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/search': {
+      id: '/_main/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof MainSearchRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/hadis40/': {
       id: '/_main/hadis40/'
       path: '/hadis40'
@@ -98,12 +120,14 @@ declare module '@tanstack/react-router' {
 
 interface MainRouteChildren {
   MainBooksRoute: typeof MainBooksRoute
+  MainSearchRoute: typeof MainSearchRoute
   MainIndexRoute: typeof MainIndexRoute
   MainHadis40IndexRoute: typeof MainHadis40IndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainBooksRoute: MainBooksRoute,
+  MainSearchRoute: MainSearchRoute,
   MainIndexRoute: MainIndexRoute,
   MainHadis40IndexRoute: MainHadis40IndexRoute,
 }
